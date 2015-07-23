@@ -1,5 +1,8 @@
 
-| |version| |downloads| |supported-versions| |supported-implementations|
+| |travisci| |version| |downloads| |supported-versions| |supported-implementations|
+
+.. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.png
+    :target: http://travis-ci.org/jonathaneunice/namedentities
 
 .. |version| image:: http://img.shields.io/pypi/v/namedentities.svg?style=flat
     :alt: PyPI Package latest release
