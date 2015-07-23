@@ -112,7 +112,7 @@ baked-in to Python 3, but must be manually handled in Python 2.
 Notes
 =====
 
- * 1.6.6 tweaks docs and inaugurates testing under Travis CI.
+ * 1.6.6 improves docs and inaugurates testing under Travis CI.
 
  * 1.6.5 updates the testing matrix, packaging, and documentation.
    All vestiges of support for Python 2.5 and PyPy 1.9 and earlier
