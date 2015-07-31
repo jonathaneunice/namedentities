@@ -3,7 +3,9 @@
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
 import sys
+import os
 
+_PY3 = sys.version_info[0] == 3
 
 class Tox(TestCommand):
     user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
@@ -32,9 +34,25 @@ def linelist(text):
     return [l.strip() for l in text.strip().splitlines() if l.split()]
 
 
+def getmetadata(filepath):
+    """
+    Return a dictionary of metadata from a file, without importing it. This
+    trick needed because importing can set off ImportError, in that setup.py
+    runs by definition before the modules it sets up (or their dependencies) are
+    available.
+    """
+    if _PY3:
+        exec(open(filepath).read())
+        return vars()
+    else:
+        execfile(filepath)
+        return locals()
+
+metadata = getmetadata('./namedentities/version.py')
+
 setup(
     name='namedentities',
-    version='1.6.6',
+    version=metadata['__version__'],
     author='Jonathan Eunice',
     author_email='jonathan.eunice@gmail.com',
     description='Named (and numeric) HTML entities to/from each other or Unicode',
