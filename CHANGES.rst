@@ -2,6 +2,9 @@
 Change Log
 ==========
 
+ * 1.6.7 switches from BSD to Apache License 2.0 and integrates
+   ``tox`` testing with ``setup.py``
+
  * 1.6.6 improves docs. Adds testing under Travis CI.
 
  * 1.6.5 updates the testing matrix, packaging, and documentation.

@@ -7,3 +7,8 @@ include .travis.yaml
 include .hgignore
 recursive-include test *.py
 recursive-include namedentities *.py
+include .gitignore
+include .travis.yml
+include LICENSE.txt
+include requirements.txt
+include setup.py

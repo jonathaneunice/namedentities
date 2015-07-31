@@ -1,7 +1,7 @@
 
 | |travisci| |version| |downloads| |supported-versions| |supported-implementations|
 
-.. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.png
+.. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.svg
     :target: http://travis-ci.org/jonathaneunice/namedentities
 
 .. |version| image:: http://img.shields.io/pypi/v/namedentities.svg?style=flat
@@ -33,7 +33,7 @@ use in databases, files, emails, and other contexts than Unicode is, given
 the various encodings (UTF-8 and such) required.
 
 This module helps convert from whatever characters or entities you have into
-either named or numeric (either decimal or hexidecimal) HTML entities. Or,
+either named or numeric (either decimal or hexadecimal) HTML entities. Or,
 if you prefer, it will conversely help you go the other way, mapping all
 entities into Unicode.
 
@@ -98,22 +98,25 @@ and nitsy--easy. Yay us! It will not, however, specifically help you with
 "encodings" of Unicode characters such as UTF-8; for these, use Python's
 built-in features.
 
-Python 3 tends to handle encoding/decoding with a fair degree of
-transparency. Python 2, however, manifestly does not. Use the ``decode``
+Python 3 tends to handle encoding/decoding pretty transparently.
+Python 2, however, does not. Use the ``decode``
 string method to get (byte) strings including UTF-8 into Unicode;
-use``encode`` to convert true ``unicode`` strings into UTF-8. Please convert
+use ``encode`` to convert true ``unicode`` strings into UTF-8. Please convert
 them to Unicode *before* processing with ``namedentities``::
 
     s = "String with some UTF-8 characters..."
     print named_entities(s.decode("utf-8"))
 
 The best strategy is to convert data to full Unicode as soon as
-possible after ingesting it. Process in Unicode.
+possible after ingesting it. Process everything uniformly in Unicode.
 Then encode back to UTF-8 etc. as you write the data out. This strategy is
-baked-in to Python 3, but must be manually handled in Python 2.
+baked-in to Python 3, but must be manually accomplished in Python 2.
 
 Notes
 =====
+
+ * 1.6.7 switches from BSD to Apache License 2.0 and integrates
+   ``tox`` testing with ``setup.py``
 
  * 1.6.6 improves docs and inaugurates testing under Travis CI.
 
@@ -127,13 +130,16 @@ Notes
    ``&amp;`` (or their numerical equivalents) to avoid interfering
    with HTML escaping.
 
- * Automated multi-version testing managed with the wonderful `pytest
-   <http://pypi.python.org/pypi/pytest>`_ and `tox
-   <http://pypi.python.org/pypi/tox>`_. Successfully packaged for, and
+ * Automated multi-version testing managed with `pytest
+   <http://pypi.python.org/pypi/pytest>`_  and `tox
+   <http://pypi.python.org/pypi/tox>`_. Continuous integration testing
+   with `Travis-CI <https://travis-ci.org/jonathaneunice/namedentities>`_.
+   Packaging linting with `pyroma <https://pypi.python.org/pypi/pyroma>`_.
+
+   Successfully packaged for, and
    tested against, all late-model versions of Python: 2.6, 2.7, 3.2, 3.3,
-   and 3.4, as well as PyPy 2.6.0 (based on 2.7.9) and PyPy3 2.4.0 (based
-   on 3.2.5). Should run fine on Python 3.5, though py.test is broken on
-   its pre-release iterations.
+   3.4, and 3.5 pre-release (3.5.0b3) as well as PyPy 2.6.0 (based on
+   2.7.9) and PyPy3 2.4.0 (based on 3.2.5).
 
  * This module started as basically a packaging of `Ian Beck's recipe
    <http://beckism.com/2009/03/named_entities_python/>`_. While it's
