@@ -1,5 +1,5 @@
 
-| |travisci| |version| |downloads| |supported-versions| |supported-implementations|
+| |travisci| |version| |downloads| |supported-versions| |supported-implementations| |wheel|
 
 .. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.svg
     :target: http://travis-ci.org/jonathaneunice/namedentities
@@ -18,6 +18,10 @@
 
 .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/namedentities.svg
     :alt: Supported implementations
+    :target: https://pypi.python.org/pypi/namedentities
+
+.. |wheel| image:: https://img.shields.io/pypi/wheel/namedentities.svg
+    :alt: Wheel packaging support
     :target: https://pypi.python.org/pypi/namedentities
 
 .. |oplus| unicode:: 0x2295 .. oplus
@@ -115,6 +119,8 @@ baked-in to Python 3, but must be manually accomplished in Python 2.
 Notes
 =====
 
+ * 1.6.8 adds wheel packaging and updates testing config.
+
  * 1.6.7 switches from BSD to Apache License 2.0 and integrates
    ``tox`` testing with ``setup.py``
 
@@ -145,6 +151,11 @@ Notes
    <http://beckism.com/2009/03/named_entities_python/>`_. While it's
    moved forward since then, it's still mostly Ian under the
    covers. Thank you, Ian!
+
+ * The author, `Jonathan Eunice <mailto:jonathan.eunice@gmail.com>`_
+   or `@jeunice on Twitter <http://twitter.com/jeunice>`_ welcomes
+   your comments and suggestions.
+
 
 Installation
 ============
