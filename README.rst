@@ -26,20 +26,22 @@
 
 .. |oplus| unicode:: 0x2295 .. oplus
 
-When reading HTML, named entities are often neater and easier to comprehend
-than numeric entities, Unicode (or other charset) characters, or a mixture
-of all of the above. The |oplus| character, for example, is easier to
+When reading HTML, named entities are neater and often easier to comprehend
+than numeric entities (in decimal or hexidecimal notation), Unicode
+characters, or a mixture. The |oplus| character, for example, is easier to
 recognize and remember as ``&oplus;`` than ``&#8853;`` or ``&#x2295;`` or
 ``\u2295``.
 
-Because they fall within the ASCII range, entities are also much safer to
-use in databases, files, emails, and other contexts than Unicode is, given
-the various encodings (UTF-8 and such) required.
+Because they use only pure ASCII characters, entities are also much safer to
+use in databases, files, emails, and other contexts, especially given the
+many endings (UTF-8 and such) required to fit Unicode into byte-oriented
+storage, and the many quirks and platform variations seen along the way.
 
-This module helps convert from whatever characters or entities you have into
-either named or numeric (either decimal or hexadecimal) HTML entities. Or,
-if you prefer, it will conversely help you go the other way, mapping all
-entities into Unicode.
+This module helps convert from whatever mixture of characters and/or
+entities you have into named HTML entities. Or, if you prefer, it will help
+you render them into numeric HTML entities (using either the decimal or
+hexadecimal numbering scheme). Finally, it will help you go the other way,
+mapping all entities into Unicode.
 
 Usage
 =====
@@ -63,12 +65,12 @@ yields::
     unicode: u'both em\u2014and\u2013dashes\u2026'
 
 You can do just about the same thing in Python 3, but you have to use a
-``print`` function rather than a ``print`` statement, and prior to 3.3, you have
-to skip the ``u`` prefix that in Python 2 marks string literals as being Unicode
-literals. In Python 3.3 and following, however, you can start using the ``u``
-marker again, if you like. While all Python 3 strings are Unicode, it helps
-with cross-version code compatibility. (You can use the ``six`` cross-version
-compatibility library, as the tests do.)
+``print`` function rather than a ``print`` statement, and prior to 3.3, you
+have to skip the ``u`` prefix that in Python 2 marks string literals as
+being Unicode literals. In Python 3.3 and following, however, you can start
+using the ``u`` marker again, if you like. While all Python 3 strings are
+Unicode, it helps with cross-version code compatibility. (You can use the
+``six`` cross-version compatibility library, as the tests do.)
 
 One good use for ``unicode_entities`` is to create cross-platform,
 cross-Python-version strings that conceptually contain
@@ -119,18 +121,7 @@ baked-in to Python 3, but must be manually accomplished in Python 2.
 Notes
 =====
 
- * 1.6.8 adds wheel packaging and updates testing config.
-
- * 1.6.7 switches from BSD to Apache License 2.0 and integrates
-   ``tox`` testing with ``setup.py``
-
- * 1.6.6 improves docs and inaugurates testing under Travis CI.
-
- * 1.6.5 updates the testing matrix, packaging, and documentation.
-   All vestiges of support for Python 2.5 and PyPy 1.9 and earlier
-   are officially withdrawn; if you're still back there, upgrade already!
-
- * See ``CHANGES.rst`` for additional changes.
+ * See ``CHANGES.rst`` for historical changes.
 
  * Doesn't attempt to encode ``&lt;``, ``&gt;``, or
    ``&amp;`` (or their numerical equivalents) to avoid interfering
@@ -149,8 +140,8 @@ Notes
 
  * This module started as basically a packaging of `Ian Beck's recipe
    <http://beckism.com/2009/03/named_entities_python/>`_. While it's
-   moved forward since then, it's still mostly Ian under the
-   covers. Thank you, Ian!
+   moved forward since then, Ian's contribution to the core remains
+   key. Thank you, Ian!
 
  * The author, `Jonathan Eunice <mailto:jonathan.eunice@gmail.com>`_
    or `@jeunice on Twitter <http://twitter.com/jeunice>`_ welcomes
@@ -168,7 +159,7 @@ To ``easy_install`` under a specific Python version (3.3 in this example)::
 
     python3.3 -m easy_install --upgrade namedentities
 
-(You may need to prefix these with ``sudo`` command to authorize
+(You may need to prefix these with ``sudo`` to authorize
 installation. In environments without super-user privileges, you may want to
 use ``pip``'s ``--user`` option, to install only for a single user, rather
 than system-wide.)

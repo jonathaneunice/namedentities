@@ -2,6 +2,8 @@
 Change Log
 ==========
 
+ * 1.6.9 simplifies packaging and testing config. Some doc tweaks.
+
  * 1.6.8 adds wheel packaging and updates testing config.
 
  * 1.6.7 switches from BSD to Apache License 2.0 and integrates

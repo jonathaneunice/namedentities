@@ -9,7 +9,9 @@ else:
 import re
 import codecs
 
-class UnknownEntities(KeyError): pass
+
+class UnknownEntities(KeyError):
+    pass
 
 NAMED_ENT   = unicode('&{0};')
 NUMERIC_ENT = unicode('&#{0};')
@@ -30,7 +32,7 @@ def unescape(text):
         if text[:2] == "&#":            # numeric entity
             try:
                 codepoint = int(text[3:-1], 16) if text[:3] == "&#x" \
-                            else int(text[2:-1])
+                    else int(text[2:-1])
                 if codepoint != 38 and codepoint != 60 and codepoint != 62:
                     return unichr(codepoint)
             except ValueError:
@@ -166,12 +168,12 @@ def hex_entities(text):
         return entities_text
 
 
-CONVERTER = { 'named':   named_entities,
-              'numeric': numeric_entities,
-              'decimal': numeric_entities,
-              'hex':     hex_entities,
-              'unicode': unicode_entities,
-              'none'   : lambda x: x }
+CONVERTER = {'named':   named_entities,
+             'numeric': numeric_entities,
+             'decimal': numeric_entities,
+             'hex':     hex_entities,
+             'unicode': unicode_entities,
+             'none':    lambda x: x}
 
 
 def entities(text, kind='named'):
