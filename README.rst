@@ -27,21 +27,21 @@
 .. |oplus| unicode:: 0x2295 .. oplus
 
 When reading HTML, named entities are neater and often easier to comprehend
-than numeric entities (in decimal or hexidecimal notation), Unicode
+than numeric entities (whether in decimal or hexidecimal notation), Unicode
 characters, or a mixture. The |oplus| character, for example, is easier to
 recognize and remember as ``&oplus;`` than ``&#8853;`` or ``&#x2295;`` or
 ``\u2295``.
 
-Because they use only pure ASCII characters, entities are also much safer to
+Because they use only pure ASCII characters, entities are safer to
 use in databases, files, emails, and other contexts, especially given the
-many endings (UTF-8 and such) required to fit Unicode into byte-oriented
-storage, and the many quirks and platform variations seen along the way.
+many encodings (UTF-8 and such) required to fit Unicode into byte-oriented
+storage--and the many platform variations and quirks seen along the way.
 
 This module helps convert from whatever mixture of characters and/or
-entities you have into named HTML entities. Or, if you prefer, it will help
-you render them into numeric HTML entities (using either the decimal or
-hexadecimal numbering scheme). Finally, it will help you go the other way,
-mapping all entities into Unicode.
+entities you have into named HTML entities. Or, if you prefer, 
+into numeric HTML entities (either decimal or
+hexadecimal). It will even help you go the other way,
+mapping entities into Unicode.
 
 Usage
 =====
@@ -121,31 +121,31 @@ baked-in to Python 3, but must be manually accomplished in Python 2.
 Notes
 =====
 
- * See ``CHANGES.rst`` for historical changes.
+* See ``CHANGES.yml`` for historical changes.
 
- * Doesn't attempt to encode ``&lt;``, ``&gt;``, or
-   ``&amp;`` (or their numerical equivalents) to avoid interfering
-   with HTML escaping.
+* Doesn't attempt to encode ``&lt;``, ``&gt;``, or
+  ``&amp;`` (or their numerical equivalents) to avoid interfering
+  with HTML escaping.
 
- * Automated multi-version testing managed with `pytest
-   <http://pypi.python.org/pypi/pytest>`_  and `tox
-   <http://pypi.python.org/pypi/tox>`_. Continuous integration testing
-   with `Travis-CI <https://travis-ci.org/jonathaneunice/namedentities>`_.
-   Packaging linting with `pyroma <https://pypi.python.org/pypi/pyroma>`_.
+* Automated multi-version testing managed with `pytest
+  <http://pypi.python.org/pypi/pytest>`_  and `tox
+  <http://pypi.python.org/pypi/tox>`_. Continuous integration testing
+  with `Travis-CI <https://travis-ci.org/jonathaneunice/namedentities>`_.
+  Packaging linting with `pyroma <https://pypi.python.org/pypi/pyroma>`_.
 
-   Successfully packaged for, and
-   tested against, all late-model versions of Python: 2.6, 2.7, 3.2, 3.3,
-   3.4, and 3.5 pre-release (3.5.0b3) as well as PyPy 2.6.0 (based on
-   2.7.9) and PyPy3 2.4.0 (based on 3.2.5).
+  Successfully packaged for, and
+  tested against, all late-model versions of Python: 2.6, 2.7, 3.2, 3.3,
+  3.4, and 3.5 pre-release (3.5.0b3) as well as PyPy 2.6.0 (based on
+  2.7.9) and PyPy3 2.4.0 (based on 3.2.5).
 
- * This module started as basically a packaging of `Ian Beck's recipe
-   <http://beckism.com/2009/03/named_entities_python/>`_. While it's
-   moved forward since then, Ian's contribution to the core remains
-   key. Thank you, Ian!
+* This module started as basically a packaging of `Ian Beck's recipe
+  <http://beckism.com/2009/03/named_entities_python/>`_. While it's
+  moved forward since then, Ian's contribution to the core remains
+  key. Thank you, Ian!
 
- * The author, `Jonathan Eunice <mailto:jonathan.eunice@gmail.com>`_
-   or `@jeunice on Twitter <http://twitter.com/jeunice>`_ welcomes
-   your comments and suggestions.
+* The author, `Jonathan Eunice <mailto:jonathan.eunice@gmail.com>`_
+  or `@jeunice on Twitter <http://twitter.com/jeunice>`_ welcomes
+  your comments and suggestions.
 
 
 Installation
