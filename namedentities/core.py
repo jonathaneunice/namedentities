@@ -22,11 +22,12 @@ def unescape(text):
     """
     def fixup(m):
         """
-        Given an HTML entity (named or numeric), return its Unicode equivalent.
-        Does not, however, unescape &lt; &gt; and &amp; (decimal 60, 62, and
-        38). Those are 'special' in that they are often escaped for very
-        important, specific reasons (e.g. to describe HTML within HTML). Any
-        messing with them is likely to break things badly.
+        Given an HTML entity (named or numeric), return its Unicode
+        equivalent. Does not, however, unescape &amp; &lt; and &gt; and
+        &amp; (decimal 38, 60, and 62). Those are 'special' in that they are
+        often escaped for very important, specific reasons (e.g. to describe
+        HTML within HTML). Any messing with them is likely to break things
+        badly.
         """
         text = m.group(0)
         if text[:2] == "&#":            # numeric entity
@@ -65,7 +66,7 @@ def named_entities_codec(text):
                 s.append(NUMERIC_ENT.format(ord(c)))
         return ''.join(s), text.end
     else:
-        raise TypeError("Can't handle {0}".format(text.__name__))
+        raise TypeError("Can't handle {0!r}".format(text))
 
 
 def numeric_entities_codec(text):
@@ -78,7 +79,7 @@ def numeric_entities_codec(text):
             s.append(NUMERIC_ENT.format(ord(c)))
         return ''.join(s), text.end
     else:
-        raise TypeError("Can't handle {0}".format(text.__name__))
+        raise TypeError("Can't handle {0!r}".format(text))
 
 
 def hex_entities_codec(text):
@@ -92,7 +93,7 @@ def hex_entities_codec(text):
             s.append(NUMERIC_ENT.format(hex(ord(c))[1:]))
         return ''.join(s), text.end
     else:
-        raise TypeError("Can't handle {0}".format(text.__name__))
+        raise TypeError("Can't handle {0!r}".format(text))
 
 
 codecs.register_error('named_entities',   named_entities_codec)
@@ -132,6 +133,7 @@ def numeric_entities(text):
         return entities_text
 
 decimal_entities = numeric_entities
+
 
 def numeric_entities_builtin(text):
     """

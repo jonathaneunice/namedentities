@@ -1,5 +1,12 @@
 
 -
+    version 1.8.0
+    date: August 17, 2015
+    notes: >
+        Achieves 100% test coverage and institutes new integrated
+        test coverage measurments on every test run.
+        
+-
     version: 1.7.0
     date: August 11, 2015
     notes: >

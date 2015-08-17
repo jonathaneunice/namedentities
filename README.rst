@@ -1,5 +1,5 @@
 
-| |travisci| |version| |downloads| |supported-versions| |supported-implementations| |wheel|
+| |travisci| |version| |downloads| |supported-versions| |supported-implementations| |wheel| |coverage|
 
 .. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.svg
     :target: http://travis-ci.org/jonathaneunice/namedentities
@@ -24,6 +24,11 @@
     :alt: Wheel packaging support
     :target: https://pypi.python.org/pypi/namedentities
 
+.. |coverage| image:: https://img.shields.io/badge/test_coverage-100%25-6600CC.svg
+    :alt: Test line coverage
+    :target: https://pypi.python.org/pypi/namedentities
+
+
 .. |oplus| unicode:: 0x2295 .. oplus
 
 When reading HTML, named entities are neater and often easier to comprehend
@@ -38,7 +43,7 @@ many encodings (UTF-8 and such) required to fit Unicode into byte-oriented
 storage--and the many platform variations and quirks seen along the way.
 
 This module helps convert from whatever mixture of characters and/or
-entities you have into named HTML entities. Or, if you prefer, 
+entities you have into named HTML entities. Or, if you prefer,
 into numeric HTML entities (either decimal or
 hexadecimal). It will even help you go the other way,
 mapping entities into Unicode.
@@ -121,7 +126,9 @@ baked-in to Python 3, but must be manually accomplished in Python 2.
 Notes
 =====
 
-* See ``CHANGES.yml`` for historical changes.
+* Version 1.8 acheives 100% test line coverage.
+
+* See ``CHANGES.yml`` for more historical changes.
 
 * Doesn't attempt to encode ``&lt;``, ``&gt;``, or
   ``&amp;`` (or their numerical equivalents) to avoid interfering
@@ -129,7 +136,8 @@ Notes
 
 * Automated multi-version testing managed with `pytest
   <http://pypi.python.org/pypi/pytest>`_  and `tox
-  <http://pypi.python.org/pypi/tox>`_. Continuous integration testing
+  <http://pypi.python.org/pypi/tox>`_. 
+  Continuous integration testing
   with `Travis-CI <https://travis-ci.org/jonathaneunice/namedentities>`_.
   Packaging linting with `pyroma <https://pypi.python.org/pypi/pyroma>`_.
 
