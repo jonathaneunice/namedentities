@@ -134,9 +134,11 @@ Notes
   ``&amp;`` (or their numerical equivalents) to avoid interfering
   with HTML escaping.
 
-* Automated multi-version testing managed with `pytest
-  <http://pypi.python.org/pypi/pytest>`_  and `tox
-  <http://pypi.python.org/pypi/tox>`_. 
+* Automated multi-version testing managed with the wonderful
+  `pytest <http://pypi.python.org/pypi/pytest>`_,
+  `pytest-cov <http://pypi.python.org/pypi/pytest-cov>`_,
+  `coverage <http://pypi.python.org/pypi/coverage>`_,
+  and `tox <http://pypi.python.org/pypi/tox>`_.
   Continuous integration testing
   with `Travis-CI <https://travis-ci.org/jonathaneunice/namedentities>`_.
   Packaging linting with `pyroma <https://pypi.python.org/pypi/pyroma>`_.
