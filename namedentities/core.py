@@ -36,15 +36,19 @@ def unescape(text):
                     else int(text[2:-1])
                 if codepoint != 38 and codepoint != 60 and codepoint != 62:
                     return unichr(codepoint)
+                else:
+                    return text
             except ValueError:
-                pass
+                return text
         else:                           # named entity
             try:
                 codepoint = name2codepoint[text[1:-1]]
                 if codepoint != 38 and codepoint != 60 and codepoint != 62:
                     return unichr(codepoint)
+                else:
+                    return text
             except KeyError:
-                pass
+                return text
         return text                     # leave as is
 
     return re.sub(r"&#?\w+;", fixup, text)

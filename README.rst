@@ -1,5 +1,5 @@
 
-| |travisci| |version| |downloads| |supported-versions| |supported-implementations| |wheel| |coverage|
+| |travisci| |version| |downloads| |versions| |impls| |wheel| |coverage| |br-coverage|
 
 .. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.svg
     :target: http://travis-ci.org/jonathaneunice/namedentities
@@ -12,11 +12,11 @@
     :alt: PyPI Package monthly downloads
     :target: https://pypi.python.org/pypi/namedentities
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/namedentities.svg
+.. |versions| image:: https://img.shields.io/pypi/pyversions/namedentities.svg
     :alt: Supported versions
     :target: https://pypi.python.org/pypi/namedentities
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/namedentities.svg
+.. |impls| image:: https://img.shields.io/pypi/implementation/namedentities.svg
     :alt: Supported implementations
     :target: https://pypi.python.org/pypi/namedentities
 
@@ -28,6 +28,9 @@
     :alt: Test line coverage
     :target: https://pypi.python.org/pypi/namedentities
 
+.. |br-coverage| image:: https://img.shields.io/badge/test_coverage-96%25-blue.svg
+    :alt: Test branch coverage
+    :target: https://pypi.python.org/pypi/namedentities
 
 .. |oplus| unicode:: 0x2295 .. oplus
 
@@ -126,6 +129,8 @@ baked-in to Python 3, but must be manually accomplished in Python 2.
 Notes
 =====
 
+* Version 1.8.1 starts automatic test branch coverage with 96% coverage.
+
 * Version 1.8 acheives 100% test line coverage.
 
 * See ``CHANGES.yml`` for more historical changes.
@@ -173,3 +178,12 @@ To ``easy_install`` under a specific Python version (3.3 in this example)::
 installation. In environments without super-user privileges, you may want to
 use ``pip``'s ``--user`` option, to install only for a single user, rather
 than system-wide.)
+
+Testing
+=======
+
+To run the module tests, use one of these commands::
+
+    tox                # normal run - speed optimized
+    tox -e py27        # run for a specific version only (e.g. py27, py34)
+    tox -c toxcov.ini  # run full coverage tests

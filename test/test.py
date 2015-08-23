@@ -20,8 +20,8 @@ def _print(*args, **kwargs):
 
 
 def test_unicode():
-    u = six.u('both em\u2014and')
-    assert named_entities(u) == six.u("both em&mdash;and")
+    u = six.u('both em\u2014and&')
+    assert named_entities(u) == six.u("both em&mdash;and&")
 
 
 def test_numeric_entity():
@@ -43,7 +43,7 @@ def test_broken_entity():
 
     u = 'also &broken; too'
     assert hex_entities(u) == u
-    
+
 
 def test_broken_codecs():
     # ensure some trivial exception paths as not legitimate issues

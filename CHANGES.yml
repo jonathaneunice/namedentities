@@ -1,4 +1,12 @@
 
+
+-
+    version: 1.8.1
+    date: August 23, 2015
+    notes: >
+        Added automatic measurement of test branch coverage.
+        Starts with 96% coverage.
+        
 -
     version 1.8.0
     date: August 17, 2015
