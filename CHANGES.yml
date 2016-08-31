@@ -1,5 +1,10 @@
 
-
+-
+    version: 1.8.2
+    date: August 31, 2016
+    notes: >
+        Updated testing. Qualified under Python 2.7.12
+        
 -
     version: 1.8.1
     date: August 23, 2015
