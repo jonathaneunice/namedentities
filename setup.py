@@ -14,7 +14,7 @@ def lines(text):
 
 setup(
     name='namedentities',
-    version='1.8.2',
+    version='1.8.3',
     author='Jonathan Eunice',
     author_email='jonathan.eunice@gmail.com',
     description='Named (and numeric) HTML entities to/from each other or Unicode',
@@ -39,7 +39,6 @@ setup(
         Programming Language :: Python :: 2.6
         Programming Language :: Python :: 2.7
         Programming Language :: Python :: 3
-        Programming Language :: Python :: 3.2
         Programming Language :: Python :: 3.3
         Programming Language :: Python :: 3.4
         Programming Language :: Python :: 3.5
