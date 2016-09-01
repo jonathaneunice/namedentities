@@ -14,7 +14,7 @@ def lines(text):
 
 setup(
     name='namedentities',
-    version='1.8.4',
+    version='1.8.5',
     author='Jonathan Eunice',
     author_email='jonathan.eunice@gmail.com',
     description='Named (and numeric) HTML entities to/from each other or Unicode',
@@ -27,7 +27,7 @@ setup(
     tests_require=['tox', 'pytest', 'pytest-cov', 'coverage', 'six>=1.9'],
     test_suite="test",
     zip_safe=False,  # it really is, but this will prevent weirdness
-    keywords='HTML entities Unicode named numeric decimal hex hexadecimal glyph character set charset',
+    keywords='HTML entities XML Unicode named numeric decimal hex hexadecimal glyph character set charset',
     classifiers=lines("""
         Development Status :: 5 - Production/Stable
         Operating System :: OS Independent
@@ -39,13 +39,16 @@ setup(
         Programming Language :: Python :: 2.6
         Programming Language :: Python :: 2.7
         Programming Language :: Python :: 3
+        Programming Language :: Python :: 3.2
         Programming Language :: Python :: 3.3
         Programming Language :: Python :: 3.4
         Programming Language :: Python :: 3.5
+        Programming Language :: Python :: 3.6
         Programming Language :: Python :: Implementation :: CPython
         Programming Language :: Python :: Implementation :: PyPy
         Topic :: Text Processing :: Filters
         Topic :: Text Processing :: Markup :: HTML
+        Topic :: Text Processing :: Markup :: XML
         Topic :: Software Development :: Libraries :: Python Modules
     """)
 )

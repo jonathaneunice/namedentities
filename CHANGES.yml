@@ -1,5 +1,14 @@
 
 -
+    version: 1.8.5
+    date: August 31, 2016
+    notes: >
+        Reinstated Python 3.2 support provisionally. It tests fine under
+        Travis CI, even if my local 3.2 test rig can no longer effectively
+        test 3.2. Updated Travis config for broader test coverage there,
+        including the 3.6 "nightly" build.
+        
+-
     version: 1.8.4
     date: August 31, 2016
     notes: >
