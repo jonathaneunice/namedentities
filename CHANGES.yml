@@ -1,4 +1,10 @@
-
+-
+    version: 1.9.0
+    date: September 1, 2016
+    notes: >
+        Added `escape` keyword argument to enable
+        markup escaping via `cgi.escape`.
+        
 -
     version: 1.8.5
     date: August 31, 2016

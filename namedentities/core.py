@@ -23,8 +23,8 @@ def unescape(text):
     def fixup(m):
         """
         Given an HTML entity (named or numeric), return its Unicode
-        equivalent. Does not, however, unescape &amp; &lt; and &gt; and
-        &amp; (decimal 38, 60, and 62). Those are 'special' in that they are
+        equivalent. Does not, however, unescape &amp; &lt; and &gt;
+        (decimal 38, 60, and 62). Those are 'special' in that they are
         often escaped for very important, specific reasons (e.g. to describe
         HTML within HTML). Any messing with them is likely to break things
         badly.
@@ -52,8 +52,6 @@ def unescape(text):
         return text                     # leave as is
 
     return re.sub(r"&#?\w+;", fixup, text)
-
-unicode_entities = unescape            # alias for parallel name structure
 
 
 def named_entities_codec(text):
@@ -105,7 +103,7 @@ codecs.register_error('numeric_entities', numeric_entities_codec)
 codecs.register_error('hex_entities',     hex_entities_codec)
 
 
-def named_entities(text):
+def named_entities(text, escape=False):
     """
     Given a string, convert its Unicode characters and numerical HTML entities
     to named HTML entities. Works by converting the entire string to Unicode
@@ -113,7 +111,8 @@ def named_entities(text):
     Where names are not known, numerical entities are used instead.
     """
     unescaped_text = unescape(text)
-    entities_text = unescaped_text.encode('ascii', 'named_entities')
+    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    entities_text = mixed_text.encode('ascii', 'named_entities')
     if _PY3:
         # we don't want type bytes back, we want str; therefore...
         return entities_text.decode("ascii", "strict")
@@ -121,14 +120,15 @@ def named_entities(text):
         return entities_text
 
 
-def numeric_entities(text):
+def numeric_entities(text, escape=False):
     """
     Given a string, convert its Unicode characters and named HTML entities
     to numeric HTML entities. Works by converting the entire string to Unicode
     characters, then re-encoding Unicode characters into numeric entities.
     """
     unescaped_text = unescape(text)
-    entities_text = unescaped_text.encode('ascii', 'numeric_entities')
+    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    entities_text = mixed_text.encode('ascii', 'numeric_entities')
 
     if _PY3:
         # we don't want type bytes back, we want str; therefore...
@@ -139,7 +139,7 @@ def numeric_entities(text):
 decimal_entities = numeric_entities
 
 
-def numeric_entities_builtin(text):
+def numeric_entities_builtin(text, escape=False):
     """
     Given a string, convert its Unicode characters and named HTML entities
     to numeric HTML entities. Works by converting the entire string to Unicode
@@ -148,7 +148,8 @@ def numeric_entities_builtin(text):
     This one uses the xmlcharrefreplace builtin.
     """
     unescaped_text = unescape(text)
-    entities_text = unescaped_text.encode('ascii', 'xmlcharrefreplace')
+    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    entities_text = mixed_text.encode('ascii', 'xmlcharrefreplace')
 
     if _PY3:
         # we don't want type bytes back, we want str; therefore...
@@ -157,7 +158,7 @@ def numeric_entities_builtin(text):
         return entities_text
 
 
-def hex_entities(text):
+def hex_entities(text, escape=False):
     """
     Given a string, convert its Unicode characters and named HTML entities to
     numeric HTML entities written in hexadecimal form. Works by converting the
@@ -165,7 +166,8 @@ def hex_entities(text):
     into numeric entities.
     """
     unescaped_text = unescape(text)
-    entities_text = unescaped_text.encode('ascii', 'hex_entities')
+    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    entities_text = mixed_text.encode('ascii', 'hex_entities')
 
     if _PY3:
         # we don't want type bytes back, we want str; therefore...
@@ -174,15 +176,37 @@ def hex_entities(text):
         return entities_text
 
 
-CONVERTER = {'named':   named_entities,
-             'numeric': numeric_entities,
-             'decimal': numeric_entities,
-             'hex':     hex_entities,
-             'unicode': unicode_entities,
-             'none':    lambda x: x}
+def unicode_entities(text, escape=False):
+    """
+    Given a string, convert its Unicode characters and named/numeric HTML entities
+    to Unicode characters, then re-encoding Unicode characters
+    into numeric entities.
+    """
+    unescaped_text = unescape(text)
+    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    return mixed_text
 
 
-def entities(text, kind='named'):
+
+def none_entities(text, escape=False):
+    """
+    Given a string, do nothing to convert it in any way, but optionally
+    escape its HTML. This is essentially a null / identity function,
+    present for compatibility and parallelism.
+    """
+    mixed_text = html_escape(text) if escape else text
+    return mixed_text
+
+
+CONVERTER = { 'named':   named_entities,
+              'numeric': numeric_entities,
+              'decimal': numeric_entities,
+              'hex':     hex_entities,
+              'unicode': unicode_entities,
+              'none':    none_entities }
+
+
+def entities(text, kind='named', escape=False):
     """
     Convert Unicode characters and existing entities into the desired
     kind: named, numeric, hex, unicode, or none (a no-op)
@@ -191,7 +215,26 @@ def entities(text, kind='named'):
         conv = CONVERTER[kind.lower()]
     except KeyError:
         raise UnknownEntities("Don't know about {0!r} entities".format(kind))
-    return conv(text)
+    return conv(text, escape=escape)
+
+
+def html_escape(s, quote=True):
+    """
+    Replace special characters "&", "<" and ">" to HTML-safe sequences.
+    If the optional flag quote is true (the default), the quotation mark
+    characters, both double quote (") and single quote (') characters are also
+    translated.
+
+    This code was taken verbatim from the Python 3.5.2 standard library, module
+    `html`, function `escape`, and is only renamed `html_escape` here.
+    """
+    s = s.replace("&", "&amp;") # Must be done first!
+    s = s.replace("<", "&lt;")
+    s = s.replace(">", "&gt;")
+    if quote:
+        s = s.replace('"', "&quot;")
+        s = s.replace('\'', "&#x27;")
+    return s
 
 
 def encode_ampersands(text):

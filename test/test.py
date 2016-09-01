@@ -3,7 +3,8 @@ import six
 from namedentities import *
 from namedentities.core import (named_entities_codec, hex_entities_codec,
                                 numeric_entities_codec,
-                                numeric_entities_builtin)
+                                numeric_entities_builtin,
+                                none_entities)
 import sys
 import pytest
 
@@ -111,3 +112,47 @@ def test_encode_ampersands():
 
     assert encode_ampersands("this &amp; that") == "this &amp; that"
     # ha! not fooled!
+
+
+def test_escape():
+    """
+    Ensure that inline markup escaping works
+    """
+    s = '>that&this&#x2014;that<'
+    # no encoding vs encoding, named entities
+    assert named_entities(s) == six.u(">that&this&mdash;that<")
+    assert named_entities(s, escape=True) == six.u("&gt;that&amp;this&mdash;that&lt;")
+
+    # more complicated ampersand interleaving
+    assert named_entities('&&#x2014;') == six.u("&&mdash;")
+    assert named_entities('&&#x2014;', escape=True) == six.u("&amp;&mdash;")
+
+    # decimal numeric entities, with escape
+    assert numeric_entities(s) == six.u(">that&this&#8212;that<")
+    assert numeric_entities(s, escape=True) == six.u("&gt;that&amp;this&#8212;that&lt;")
+
+    # hexadecimal numeric entities, with escape
+    assert hex_entities(s) == six.u(">that&this&#x2014;that<")
+    assert hex_entities(s, escape=True) == six.u("&gt;that&amp;this&#x2014;that&lt;")
+
+    # unicode entities, with escape
+    assert unicode_entities(s) == six.u(">that&this\u2014that<")
+    assert unicode_entities(s, escape=True) == six.u("&gt;that&amp;this\u2014that&lt;")
+
+    # none entities, with escape
+    assert none_entities(s) == six.u('>that&this&#x2014;that<')
+    assert none_entities(s, escape=True) == six.u('&gt;that&amp;this&amp;#x2014;that&lt;')
+
+    # entities API, with escape
+    assert entities(s, 'named') == six.u(">that&this&mdash;that<")
+    assert entities(s, 'named', escape=True) == six.u("&gt;that&amp;this&mdash;that&lt;")
+    assert entities(s, 'numeric') == six.u(">that&this&#8212;that<")
+    assert entities(s, 'numeric', escape=True) == six.u("&gt;that&amp;this&#8212;that&lt;")
+    assert entities(s, 'decimal') == six.u(">that&this&#8212;that<")
+    assert entities(s, 'decimal', escape=True) == six.u("&gt;that&amp;this&#8212;that&lt;")
+    assert entities(s, 'hex') == six.u(">that&this&#x2014;that<")
+    assert entities(s, 'hex', escape=True) == six.u("&gt;that&amp;this&#x2014;that&lt;")
+    assert entities(s, 'none') == six.u(">that&this&#x2014;that<")
+    assert entities(s, 'none', escape=True) == six.u('&gt;that&amp;this&amp;#x2014;that&lt;')
+
+

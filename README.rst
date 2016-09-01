@@ -38,9 +38,10 @@ When reading HTML, named entities are neater and often easier to comprehend
 than numeric entities (whether in decimal or hexidecimal notation), Unicode
 characters, or a mixture. The |oplus| character, for example, is easier to
 recognize and remember as ``&oplus;`` than ``&#8853;`` or ``&#x2295;`` or
-``\u2295``.
+``\u2295``. It's also a lot mroe compact than its verbose Unicode descriptor,
+``CIRCLED PLUS``.
 
-Because they use only pure ASCII characters, entities are safer to
+Because they use only pure 7-bit ASCII characters, entities are safer to
 use in databases, files, emails, and other contexts, especially given the
 many encodings (UTF-8 and such) required to fit Unicode into byte-oriented
 storage--and the many platform variations and quirks seen along the way.
@@ -126,8 +127,30 @@ possible after ingesting it. Process everything uniformly in Unicode.
 Then encode back to UTF-8 etc. as you write the data out. This strategy is
 baked-in to Python 3, but must be manually accomplished in Python 2.
 
+Escaping
+========
+
+Converting the character entities used in text strings to more
+convenient encodings is the primary point of this module. This
+role is different from that of "escaping" key characters
+such as ``&``, ``<`` and ``>`` (and possibly quotation marks such as `'`
+and ``"``) that have special meaning in
+HTML and XML. Still, the tasks overlap. They're both about
+transforming strings using entity representations, and when
+you want to do one, you will often need to do both. ``namedentities``
+therefore provides a mechanism to make this convenient.
+
+Any of this modudle's functions take an optional ``escape``
+keyword argument. If set to ``True``, strings are pre-processed
+with the equivalent of the Python standard library's
+``html.escape`` so that ``&``, ``<`` and ``>`` are replaced
+with ``&amp;``, ``&lt;``, and ``&gt;`` respectively.
+
+
 Notes
 =====
+
+* Version 1.9 adds the convenience HTML escaping.
 
 * Version 1.8.1 starts automatic test branch coverage with 96% coverage.
 
