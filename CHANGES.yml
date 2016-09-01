@@ -1,4 +1,12 @@
-=
+
+-
+    version: 1.8.4
+    date: August 31, 2016
+    notes: >
+        Updated testing to Python 3.5.2 and 3.6.0a4.
+        Preparing for new functional enhancements.
+        
+-
     version: 1.8.3
     date: August 31, 2016
     notes: >
