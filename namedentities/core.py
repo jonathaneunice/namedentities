@@ -103,6 +103,21 @@ codecs.register_error('numeric_entities', numeric_entities_codec)
 codecs.register_error('hex_entities',     hex_entities_codec)
 
 
+def transform(text, escape, codec_name):
+    """
+    Generic text transformer that converts a string into hatever
+    form of entities are required.
+    """
+    unescaped_text = unescape(text)
+    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    entities_text = mixed_text.encode('ascii', codec_name)
+    if _PY3:
+        # we don't want type bytes back, we want str; therefore...
+        return entities_text.decode("ascii", "strict")
+    else:
+        return entities_text
+
+
 def named_entities(text, escape=False):
     """
     Given a string, convert its Unicode characters and numerical HTML entities
@@ -110,14 +125,7 @@ def named_entities(text, escape=False):
     characters, then re-encoding Unicode characters into named entities.
     Where names are not known, numerical entities are used instead.
     """
-    unescaped_text = unescape(text)
-    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
-    entities_text = mixed_text.encode('ascii', 'named_entities')
-    if _PY3:
-        # we don't want type bytes back, we want str; therefore...
-        return entities_text.decode("ascii", "strict")
-    else:
-        return entities_text
+    return transform(text, escape, 'named_entities')
 
 
 def numeric_entities(text, escape=False):
@@ -126,15 +134,8 @@ def numeric_entities(text, escape=False):
     to numeric HTML entities. Works by converting the entire string to Unicode
     characters, then re-encoding Unicode characters into numeric entities.
     """
-    unescaped_text = unescape(text)
-    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
-    entities_text = mixed_text.encode('ascii', 'numeric_entities')
+    return transform(text, escape, 'numeric_entities')
 
-    if _PY3:
-        # we don't want type bytes back, we want str; therefore...
-        return entities_text.decode("ascii", "strict")
-    else:
-        return entities_text
 
 decimal_entities = numeric_entities
 
@@ -147,15 +148,7 @@ def numeric_entities_builtin(text, escape=False):
 
     This one uses the xmlcharrefreplace builtin.
     """
-    unescaped_text = unescape(text)
-    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
-    entities_text = mixed_text.encode('ascii', 'xmlcharrefreplace')
-
-    if _PY3:
-        # we don't want type bytes back, we want str; therefore...
-        return entities_text.decode("ascii", "strict")
-    else:
-        return entities_text
+    return transform(text, escape, 'xmlcharrefreplace')
 
 
 def hex_entities(text, escape=False):
@@ -165,15 +158,7 @@ def hex_entities(text, escape=False):
     entire string to Unicode characters, then re-encoding Unicode characters
     into numeric entities.
     """
-    unescaped_text = unescape(text)
-    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
-    entities_text = mixed_text.encode('ascii', 'hex_entities')
-
-    if _PY3:
-        # we don't want type bytes back, we want str; therefore...
-        return entities_text.decode("ascii", "strict")
-    else:
-        return entities_text
+    return transform(text, escape, 'hex_entities')
 
 
 def unicode_entities(text, escape=False):
@@ -187,7 +172,6 @@ def unicode_entities(text, escape=False):
     return mixed_text
 
 
-
 def none_entities(text, escape=False):
     """
     Given a string, do nothing to convert it in any way, but optionally
@@ -196,6 +180,10 @@ def none_entities(text, escape=False):
     """
     mixed_text = html_escape(text) if escape else text
     return mixed_text
+
+    # This potentially has a rather different behavior than the other
+    # entity mappers, in that legitimate entities are never nativized before
+    # possible escaping. Do we really need a none transform?
 
 
 CONVERTER = { 'named':   named_entities,
