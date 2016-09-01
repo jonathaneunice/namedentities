@@ -114,6 +114,12 @@ def test_encode_ampersands():
     # ha! not fooled!
 
 
+def test_escape_function():
+    esc = lambda s: s.replace('"', 'QUOTE')
+    assert named_entities('and "this" is', escape=esc) == \
+       'and QUOTEthisQUOTE is'
+    
+
 def test_escape():
     """
     Ensure that inline markup escaping works
@@ -154,5 +160,3 @@ def test_escape():
     assert entities(s, 'hex', escape=True) == six.u("&gt;that&amp;this&#x2014;that&lt;")
     assert entities(s, 'none') == six.u(">that&this&#x2014;that<")
     assert entities(s, 'none', escape=True) == six.u('&gt;that&amp;this&amp;#x2014;that&lt;')
-
-

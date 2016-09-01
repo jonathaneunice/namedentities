@@ -133,7 +133,7 @@ Escaping
 Converting the character entities used in text strings to more
 convenient encodings is the primary point of this module. This
 role is different from that of "escaping" key characters
-such as ``&``, ``<`` and ``>`` (and possibly quotation marks such as `'`
+such as ``&``, ``<`` and ``>`` (and possibly quotation marks such as ``'``
 and ``"``) that have special meaning in
 HTML and XML. Still, the tasks overlap. They're both about
 transforming strings using entity representations, and when
@@ -145,6 +145,15 @@ keyword argument. If set to ``True``, strings are pre-processed
 with the equivalent of the Python standard library's
 ``html.escape`` so that ``&``, ``<`` and ``>`` are replaced
 with ``&amp;``, ``&lt;``, and ``&gt;`` respectively.
+Quotations are not escaped, by default.
+
+If you provide a function instead of ``True``, that function
+will be used as the escape transformation. E.g.:
+
+    import html
+    hex_entities('...', escape=html.escape)
+
+Will escape all of the HTML relevant characters, including quotations.
 
 
 Notes

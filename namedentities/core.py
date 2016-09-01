@@ -103,13 +103,21 @@ codecs.register_error('numeric_entities', numeric_entities_codec)
 codecs.register_error('hex_entities',     hex_entities_codec)
 
 
+
+def perform_escape(s, escape):
+    if not escape:
+        return s
+    escaper = escape if hasattr(escape, '__call__') else html_escape
+    return escaper(s)
+
+
 def transform(text, escape, codec_name):
     """
     Generic text transformer that converts a string into hatever
     form of entities are required.
     """
     unescaped_text = unescape(text)
-    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    mixed_text = perform_escape(unescaped_text, escape)
     entities_text = mixed_text.encode('ascii', codec_name)
     if _PY3:
         # we don't want type bytes back, we want str; therefore...
@@ -168,7 +176,7 @@ def unicode_entities(text, escape=False):
     into numeric entities.
     """
     unescaped_text = unescape(text)
-    mixed_text = html_escape(unescaped_text) if escape else unescaped_text
+    mixed_text = perform_escape(unescaped_text, escape)
     return mixed_text
 
 
@@ -178,7 +186,7 @@ def none_entities(text, escape=False):
     escape its HTML. This is essentially a null / identity function,
     present for compatibility and parallelism.
     """
-    mixed_text = html_escape(text) if escape else text
+    mixed_text = perform_escape(text, escape)
     return mixed_text
 
     # This potentially has a rather different behavior than the other
