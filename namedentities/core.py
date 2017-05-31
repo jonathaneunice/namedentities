@@ -49,7 +49,8 @@ def unescape(text):
                     return text
             except KeyError:
                 return text
-        return text                     # leave as is
+        return text                     # pragma: no cover
+                                        # should never execute - but leave as is
 
     return re.sub(r"&#?\w+;", fixup, text)
 
@@ -199,7 +200,8 @@ CONVERTER = { 'named':   named_entities,
               'decimal': numeric_entities,
               'hex':     hex_entities,
               'unicode': unicode_entities,
-              'none':    none_entities }
+              'none':    none_entities,
+              None:      none_entities }
 
 
 def entities(text, kind='named', escape=False):
@@ -208,7 +210,7 @@ def entities(text, kind='named', escape=False):
     kind: named, numeric, hex, unicode, or none (a no-op)
     """
     try:
-        conv = CONVERTER[kind.lower()]
+        conv = CONVERTER[kind.lower() if kind is not None else None]
     except KeyError:
         raise UnknownEntities("Don't know about {0!r} entities".format(kind))
     return conv(text, escape=escape)

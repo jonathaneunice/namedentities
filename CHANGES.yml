@@ -1,4 +1,13 @@
 -
+    version: 1.9.4
+    date: May 31, 2017
+    notes: >
+        Updated testing matrix.
+        
+        Bumped testing to 100% branch coverage (in
+        addition to long-held line-coverage).
+
+-
     version: 1.9.3
     date: September 1, 2016
     notes: >

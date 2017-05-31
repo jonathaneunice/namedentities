@@ -14,7 +14,7 @@ def lines(text):
 
 setup(
     name='namedentities',
-    version='1.9.3',
+    version='1.9.4',
     author='Jonathan Eunice',
     author_email='jonathan.eunice@gmail.com',
     description='Named (and numeric) HTML entities to/from each other or Unicode',
@@ -24,7 +24,7 @@ setup(
     packages=['namedentities'],
     setup_requires=[],
     install_requires=[],
-    tests_require=['tox', 'pytest', 'pytest-cov', 'coverage', 'six>=1.9'],
+    tests_require=['tox', 'pytest', 'pytest-cov', 'coverage', 'six>=1.10'],
     test_suite="test",
     zip_safe=False,  # it really is, but this will prevent weirdness
     keywords='HTML entities XML Unicode named numeric decimal hex hexadecimal glyph character set charset',

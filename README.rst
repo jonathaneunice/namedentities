@@ -1,15 +1,11 @@
 
-| |travisci| |version| |downloads| |versions| |impls| |wheel| |coverage| |br-coverage|
+| |travisci| |version| |versions| |impls| |wheel| |coverage| |br-coverage|
 
 .. |travisci| image:: https://api.travis-ci.org/jonathaneunice/namedentities.svg
     :target: http://travis-ci.org/jonathaneunice/namedentities
 
 .. |version| image:: http://img.shields.io/pypi/v/namedentities.svg?style=flat
     :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/namedentities
-
-.. |downloads| image:: http://img.shields.io/pypi/dm/namedentities.svg?style=flat
-    :alt: PyPI Package monthly downloads
     :target: https://pypi.python.org/pypi/namedentities
 
 .. |versions| image:: https://img.shields.io/pypi/pyversions/namedentities.svg
@@ -28,7 +24,7 @@
     :alt: Test line coverage
     :target: https://pypi.python.org/pypi/namedentities
 
-.. |br-coverage| image:: https://img.shields.io/badge/test_coverage-96%25-blue.svg
+.. |br-coverage| image:: https://img.shields.io/badge/test_coverage-100%25-6600CC.svg
     :alt: Test branch coverage
     :target: https://pypi.python.org/pypi/namedentities
 
@@ -57,14 +53,15 @@ Usage
 
 Python 2::
 
+    from __future__ import print_function # Python 2/3 compatibiltiy
     from namedentities import *
 
     u = u'both em\u2014and&#x2013;dashes&hellip;'
 
-    print "named:  ", repr(named_entities(u))
-    print "numeric:", repr(numeric_entities(u))
-    print "hex:"   ", repr(hex_entities(u))
-    print "unicode:", repr(unicode_entities(u))
+    print("named:  ", repr(named_entities(u)))
+    print("numeric:", repr(numeric_entities(u)))
+    print("hex:"   ", repr(hex_entities(u)))
+    print("unicode:", repr(unicode_entities(u)))
 
 yields::
 
@@ -97,12 +94,18 @@ Other APIs
 ==========
 
 ``entities(text, kind)`` takes text and the kind of entities
-you'd like returned. ``kind`` can be ``'named'`` (the default), ``'numeric'``,
-``'hex'``, ``'unicode'``, or ``'none'``. It's an alternative to the
-more explicit individual functions such as ``named_entities``.
+you'd like returned. ``kind`` can be ``'named'`` (the default), ``'numeric'``
+(a.k.a. ``'decimal'``),
+``'hex'``, ``'unicode'``, or ``'none'`` (or the actual ``None``).
+It's an alternative to the
+more explicit individual functions such as ``named_entities``,
+and can be useful when the kind of entitites you want to
+generate is data-driven.
 
-``unescape(text)`` changes all entities into Unicode characters. It has an
-alias, ``unicode_entities(text)`` for parallelism with the other APIs.
+``unescape(text)`` changes all entities (save the HTML and XML syntactic
+marers ``<``, ``>``, and ``&``)
+into Unicode characters. It has a near-alias, ``unicode_entities(text)``
+that parallelism with the other APIs.
 
 Encodings Akimbo
 ================
@@ -120,7 +123,7 @@ use ``encode`` to convert true ``unicode`` strings into UTF-8. Please convert
 them to Unicode *before* processing with ``namedentities``::
 
     s = "String with some UTF-8 characters..."
-    print named_entities(s.decode("utf-8"))
+    print(named_entities(s.decode("utf-8")))
 
 The best strategy is to convert data to full Unicode as soon as
 possible after ingesting it. Process everything uniformly in Unicode.
@@ -159,6 +162,8 @@ Will escape all of the HTML relevant characters, including quotations.
 Notes
 =====
 
+* Version 1.9.4 achieves 100% branch testing coverage.
+
 * Version 1.9 adds the convenience HTML escaping.
 
 * Version 1.8.1 starts automatic test branch coverage with 96% coverage.
@@ -182,8 +187,7 @@ Notes
 
   Successfully packaged for, and
   tested against, all late-model versions of Python: 2.6, 2.7, 3.2, 3.3,
-  3.4, and 3.5 pre-release (3.5.0b3) as well as PyPy 2.6.0 (based on
-  2.7.9) and PyPy3 2.4.0 (based on 3.2.5).
+  3.4, 3.5, 3.6, 3.7 pre-release, and late-model PyPy and PyPy3.
 
 * This module started as basically a packaging of `Ian Beck's recipe
   <http://beckism.com/2009/03/named_entities_python/>`_. While it's
@@ -202,14 +206,12 @@ To install or upgrade to the latest version::
 
     pip install -U namedentities
 
-To ``easy_install`` under a specific Python version (3.3 in this example)::
-
-    python3.3 -m easy_install --upgrade namedentities
-
-(You may need to prefix these with ``sudo`` to authorize
+You may need to prefix these with ``sudo`` to authorize
 installation. In environments without super-user privileges, you may want to
 use ``pip``'s ``--user`` option, to install only for a single user, rather
-than system-wide.)
+than system-wide. You may also need to use version-specific ``pip2`` and
+``pip3`` installers, depending on your local system configuration and desired
+version of Python.
 
 Testing
 =======
@@ -217,5 +219,5 @@ Testing
 To run the module tests, use one of these commands::
 
     tox                # normal run - speed optimized
-    tox -e py27        # run for a specific version only (e.g. py27, py34)
+    tox -e py36        # run for a specific version only (e.g. py27, py36)
     tox -c toxcov.ini  # run full coverage tests

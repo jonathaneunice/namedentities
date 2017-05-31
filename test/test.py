@@ -4,7 +4,7 @@ from namedentities import *
 from namedentities.core import (named_entities_codec, hex_entities_codec,
                                 numeric_entities_codec,
                                 numeric_entities_builtin,
-                                none_entities)
+                                none_entities, html_escape)
 import sys
 import pytest
 
@@ -118,7 +118,7 @@ def test_escape_function():
     esc = lambda s: s.replace('"', 'QUOTE')
     assert named_entities('and "this" is', escape=esc) == \
        'and QUOTEthisQUOTE is'
-    
+
 
 def test_escape():
     """
@@ -160,3 +160,41 @@ def test_escape():
     assert entities(s, 'hex', escape=True) == six.u("&gt;that&amp;this&#x2014;that&lt;")
     assert entities(s, 'none') == six.u(">that&this&#x2014;that<")
     assert entities(s, 'none', escape=True) == six.u('&gt;that&amp;this&amp;#x2014;that&lt;')
+    assert entities(s, None) == six.u(">that&this&#x2014;that<")
+    assert entities(s, None, escape=True) == six.u('&gt;that&amp;this&amp;#x2014;that&lt;')
+
+
+def test_html_escape():
+    t1 = 'this & that < other but > some'
+    t1a = 'this &amp; that &lt; other but &gt; some'
+    assert html_escape(t1) == t1a
+    assert html_escape(t1, False) == t1a
+    assert html_escape(t1, quote=False) == t1a
+
+    t2 = """and 'some' more "stuff" """
+    t2a = """and &#x27;some&#x27; more &quot;stuff&quot; """
+
+    assert html_escape(t2) == t2a
+    assert html_escape(t2, False) == t2
+    assert html_escape(t2, quote=False) == t2
+
+
+def test_unescape():
+    t0 = 'needs no escape'
+    u0 = unescape(t0)
+    assert u0 == t0
+
+    t1 = 'this&mdash;that &lt;p&gt; &amp; more'
+    t1a = six.u('this\u2014that &lt;p&gt; &amp; more')
+    u1 = unescape(t1)
+    assert u1 == t1a
+
+    t2 = 'this&mdash;that &#60;p&#62; &#38; more'
+    t2a = six.u('this\u2014that &#60;p&#62; &#38; more')
+    u2 = unescape(t2)
+    assert u2 == t2a
+
+    t3 = 'this&mdash;that &#x3c;p&#x3e; &#x26; more'
+    t3a = six.u('this\u2014that &#x3c;p&#x3e; &#x26; more')
+    u3 = unescape(t3)
+    assert u3 == t3a
